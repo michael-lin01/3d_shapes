@@ -1,5 +1,6 @@
 from display import *
 from matrix import *
+import math as m
 
   # ====================
   # add the points for a rectagular prism whose 
@@ -7,8 +8,15 @@ from matrix import *
   # height and depth dimensions.
   # ====================
 def add_box( points, x, y, z, width, height, depth ):
-    pass
-
+    add_point(points, x, y ,z)
+    add_point(points, x+width, y, z)
+    add_point(points, x, y+height, z)
+    add_point(points, x, y, z+depth)
+    add_point(points, x+width, y+height ,z)
+    add_point(points, x, y+height ,z+depth)
+    add_point(points, x+width, y ,z+depth)
+    add_point(points, x+width, y+height ,z+depth)
+    
   # ====================
   # Generates all the points along the surface
   # of a sphere with center (cx, cy, cz) and
@@ -16,8 +24,18 @@ def add_box( points, x, y, z, width, height, depth ):
   # Returns a matrix of those points
   # ====================
 def generate_sphere( points, cx, cy, cz, r, step ):
-    pass
-
+    rot, circ = 0
+    surface_points = []
+    while rot <= 1:
+        while circ <= 1:
+            x = r*m.cos(m.pi*circ) + cx
+            y = r*m.sin(m.pi*circ)*m.cos(2*m.pi*rot) + cy
+            z = r*sin(m.pi*circ)*m.sin(2*m.pi*rot) +cz
+            add_point(surface_points, x, y, z)
+        circ += step
+    rot += step
+    return surface_points
+    
   # ====================
   # adds all the points for a sphere with center 
   # (cx, cy, cz) and radius r to points
@@ -25,7 +43,9 @@ def generate_sphere( points, cx, cy, cz, r, step ):
   # necessary points
   # ====================
 def add_sphere( points, cx, cy, cz, r, step ):
-    pass
+    surface_points = generate_sphere(points, cx, cy, cz, r, step)
+    for point in surface_points:
+        add_point(points, point[0], point[1], point[2])
 
 
   # ====================
