@@ -47,7 +47,7 @@ The file follows the following format:
 
 See the file script for an example of the file format
 """
-ARG_COMMANDS = [ 'circle', 'bezier', 'hermite', 'line', 'scale', 'move', 'rotate', 'save' ]
+ARG_COMMANDS = [ 'circle', 'bezier', 'hermite', 'line', 'scale', 'move', 'rotate', 'save', 'box', 'sphere', 'torus' ]
 
 def parse_file( fname, edges, transform, screen, color ):
 
@@ -79,7 +79,12 @@ def parse_file( fname, edges, transform, screen, color ):
                       float(args[4]), float(args[5]),
                       float(args[6]), float(args[7]),
                       step, line)
-
+        elif line == 'box':
+            add_box(edges, float(args[0]), float(args[1]), float(args[2]), float(args[3]), float(args[4]), float(args[5]))
+        elif line == 'sphere':
+            pass
+        elif line == 'torus':
+            pass
         elif line == 'line':
             #print 'LINE\t' + str(args)
 
