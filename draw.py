@@ -62,7 +62,7 @@ def generate_sphere( points, cx, cy, cz, r, step ):
   # should call generate_sphere to create the
   # necessary points
   # ====================
-def add_sphere( points, cx, cy, cz, r, screen, color, step ):
+def add_sphere( points, cx, cy, cz, r, step ):
     surface_points = generate_sphere(points, cx, cy, cz, r, step)
     for point in surface_points:
         add_point(points, point[0], point[1], point[2])
@@ -75,14 +75,17 @@ def add_sphere( points, cx, cy, cz, r, screen, color, step ):
   # ====================
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
     rot = circ = 0
+    surface_points = []
     while rot <= 1:
         while circ <= 1:
-            x = m.cos(r0*m.cos(circ)+r1) +cx
-            y = r*m.sin(circ) + cy
-            z = -1*m.sin(rot)
+            x = m.cos(2*m.pi*rot)*(r0*m.cos(2*m.pi*circ)+r1) +cx
+            y = r0*m.sin(2*m.pi*circ) + cy
+            z = -1*m.sin(2*m.pi*rot)*(r0*m.cos(2*m.pi*circ)+r1) + cz
+            add_point(surface_points, x, y, z)
             circ += step
         rot += step
         circ = 0
+    return surface_points
   # ====================
   # adds all the points for a torus with center
   # (cx, cy, cz) and radii r0, r1 to points
@@ -90,7 +93,9 @@ def generate_torus( points, cx, cy, cz, r0, r1, step ):
   # necessary points
   # ====================
 def add_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+    surface_points = generate_torus(points, cx, cy, cz, r0, r1, step)
+    for point in surface_points:
+        add_point(points, point[0], point[1], point[2])
 
 
 
