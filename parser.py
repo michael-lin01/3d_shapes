@@ -82,7 +82,7 @@ def parse_file( fname, edges, transform, screen, color ):
         elif line == 'box':
             add_box(edges, float(args[0]), float(args[1]), float(args[2]), float(args[3]), float(args[4]), float(args[5]))
         elif line == 'sphere':
-            pass
+            add_sphere(edges, float(args[0]), float(args[1]), float(args[2]),float(args[3]), screen, color, step)
         elif line == 'torus':
             pass
         elif line == 'line':
@@ -119,7 +119,8 @@ def parse_file( fname, edges, transform, screen, color ):
 
         elif line == 'apply':
             matrix_mult( transform, edges )
-
+        elif line == 'clear':
+            edges = []
         elif line == 'display' or line == 'save':
             clear_screen(screen)
             draw_lines(edges, screen, color)
